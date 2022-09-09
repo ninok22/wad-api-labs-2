@@ -1,24 +1,26 @@
 import express from 'express';
 import { movies, movieReviews, movieDetails } from './moviesData';
-import uniqid from 'uniqid'
+import uniqid from 'uniqid';
+import movieModel from './movieModel'; // NEW
+import asyncHandler from 'express-async-handler'; // NEW
 
 const router = express.Router(); 
-router.get('/', (req, res) => {
-    res.json(movies);
-});
 
-// Get movie details
-router.get('/:id', (req, res) => {
+router.get('/', asyncHandler(async (req, res) => { // NEW
+    const movies = await movieModel.find();
+    res.status(200).json(movies);
+}));
+
+// Get movie details 
+router.get('/:id', asyncHandler(async (req, res) => { // NEW
     const id = parseInt(req.params.id);
-    if (movieDetails.id == id) {
-        res.status(200).json(movieDetails);
+    const movie = await movieModel.findByMovieDBId(id);
+    if (movie) {
+        res.status(200).json(movie);
     } else {
-        res.status(404).json({
-            message: 'The resource you requested could not be found.',
-            status_code: 404
-        });
+        res.status(404).json({message: 'The resource you requested could not be found.', status_code: 404});
     }
-});
+}));
 
 // Get movie reviews
 router.get('/:id/reviews', (req, res) => {
@@ -51,5 +53,6 @@ router.post('/:id/reviews', (req, res) => {
         });
     }
 });
+
 
 export default router;

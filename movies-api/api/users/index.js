@@ -1,6 +1,4 @@
-
 // create simple GET and POST functionality to get all users and add a user
-
 import express from 'express';
 import User from './userModel';
 import asyncHandler from 'express-async-handler';
@@ -70,31 +68,6 @@ router.get('/:id/favourites', async (req, res) => {
         res.status(404).json({ code: 404, msg: 'Unable to find favourites' });
     }
 });
-
-
-// // register
-// router.post('/', asyncHandler(async (req, res) => {
-//     if (req.query.action === 'register') {  //if action is 'register' then save to DB
-//         await User(req.body).save();
-//         res.status(201).json({
-//             code: 201,
-//             msg: 'Successful created new user.',
-//         });
-//     }
-//     else {  //NEW CODE!!!
-//         const user = await User.findByUserName(req.body.username);
-//         if (user.comparePassword(req.body.password)) {
-//             req.session.user = req.body.username;
-//             req.session.authenticated = true;
-//             res.status(200).json({
-//                 success: true,
-//                 token: "temporary-token"
-//               });
-//         } else {
-//             res.status(401).json('authentication failed');
-//         }
-//     }
-// }));
 
 // Register OR authenticate a user - NEW
 // function checks for both username and password in the request

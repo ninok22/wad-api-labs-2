@@ -3,9 +3,8 @@ import bcrypt from 'bcrypt-nodejs';
 
 const Schema = mongoose.Schema;
 
-// Schema is a constructor function provided 
-// by Mongoose for creating schema instances 
-//(in this case, UserSchema)
+/* Schema is a constructor function provided by Mongoose for creating 
+   chema instances (in this case, UserSchema) */
 
 const MovieSchema = new Schema({
   id: Number,
@@ -28,16 +27,8 @@ UserSchema.statics.findByUserName = function (username) {
   return this.findOne({ username: username });
 };
 
-// UserSchema.methods.comparePassword = function (candidatePassword) {
-//   const isMatch = this.password === candidatePassword;
-//   if (!isMatch) {
-//     throw new Error('Password mismatch');
-//   }
-//   return this;
-// };
-
-// uses bcrypt to compare candidate password to the password 
-// stored in the database
+/* uses bcrypt to compare candidate password to the password 
+   stored in the database */
 UserSchema.methods.comparePassword = function (passw, callback) {
   bcrypt.compare(passw, this.password, (err, isMatch) => {
     if (err) {
