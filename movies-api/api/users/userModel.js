@@ -19,4 +19,20 @@ const UserSchema = new Schema({
   favourites: [MovieSchema]
 });
 
+/* code includes static method to find a user by userName 
+   and an instance method comparePassword that allows a simple 
+   password comparison. */
+
+UserSchema.statics.findByUserName = function (username) {
+  return this.findOne({ username: username });
+};
+
+UserSchema.methods.comparePassword = function (candidatePassword) {
+  const isMatch = this.password === candidatePassword;
+  if (!isMatch) {
+    throw new Error('Password mismatch');
+  }
+  return this;
+};
+
 export default mongoose.model('User', UserSchema);
