@@ -12,15 +12,6 @@ router.get('/', async (req, res) => {
     res.status(200).json(users);
 });
 
-// register(Create)/Authenticate User
-// router.post('/', async (req, res) => {
-//     await User(req.body).save();
-//     res.status(201).json({
-//         code: 201,
-//         msg: 'Successful created new user.',
-//     });
-// });
-
 // register(Create)/Authenticate User - NEW
 router.post('/', async (req, res) => {
     if (req.query.action === 'register') {  //if action is 'register' then save to DB
@@ -39,11 +30,6 @@ router.post('/', async (req, res) => {
         }
     }
 });
-
-/*  To get a valid ID for the PUT /api/users/:id, 
-    perform a GET /api/users/ first and copy a user 
-    document returned. Then paste it into the body of 
-    the PUT request and copy/paste the _id into the URL. */
 
 // Update a user
 router.put('/:id', async (req, res) => {
