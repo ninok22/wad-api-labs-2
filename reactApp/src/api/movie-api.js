@@ -18,6 +18,15 @@ export const signup = (username, password) => {
     }).then(res => res.json())
 };
 
+export const getMovies = () => {
+    return fetch(
+       '/api/movies',{headers: {
+         'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    ).then(res => res.json());
+  };
+
 /* Notice how the routes match what is implemented in the Express API 
     and what you tested using postman. The proxy property in the React 
     package.json provides the host information required to complete the 
