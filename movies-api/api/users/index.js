@@ -45,41 +45,30 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// // POST /:id/favourites
-// router.post('/:id/favourites', async (req, res) => {
-//     const newFavourite = req.body;
-//     if (newFavourite && newFavourite.id) {
-//         const user = await User.findById(req.params.id);
-//         if (user) {
-//             user.favourites.push(newFavourite);
-//             user.save();
-//             res.status(201).json({ code: 201, msg: "Added Favourite" });
-//         } else {
-//             res.status(404).json({ code: 404, msg: 'Unable to add favourites' });
-//         }
-//     }
-// });
-
 //Add a favourite. No Error Handling Yet. Can add duplicates too! - NEW (L4-object ref)
+// router.post('/:userName/favourites', asyncHandler(async (req, res) => {
+//     const newFavourite = req.body.id;
+//     const userName = req.params.userName;
+//     const movie = await movieModel.findByMovieDBId(newFavourite);
+//     const user = await User.findByUserName(userName);
+//     await user.favourites.push(movie._id);
+//     await user.save(); 
+//     res.status(201).json(user); 
+//   }));
+
+// improved version - a movie can only appear once in the favourites array:
 router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     const newFavourite = req.body.id;
     const userName = req.params.userName;
     const movie = await movieModel.findByMovieDBId(newFavourite);
     const user = await User.findByUserName(userName);
-    await user.favourites.push(movie._id);
-    await user.save(); 
-    res.status(201).json(user); 
-  }));
-
-// // add the HTTP GET for /:id/favourites route
-// router.get('/:id/favourites', async (req, res) => {
-//     const user = await User.findById(req.params.id);
-//     if (user) {
-//         res.status(200).json(user.favourites);
-//     } else {
-//         res.status(404).json({ code: 404, msg: 'Unable to find favourites' });
-//     }
-// });
+    if(!user.favourites.includes(movie._id)){
+        await user.favourites.push(movie._id);
+        await user.save(); 
+        res.status(201).json(user);
+    }else{
+        res.status(401).json({success: false, msg: 'The movie already exit in your favorites.'});
+    }}));
 
 router.get('/:userName/favourites', asyncHandler( async (req, res) => { // - NEW (L4-object ref)
     const userName = req.params.userName;
