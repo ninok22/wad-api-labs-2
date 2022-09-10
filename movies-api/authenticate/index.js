@@ -2,7 +2,6 @@ import passport from 'passport';
 import passportJWT from 'passport-jwt';
 import UserModel from './../api/users/userModel';
 import dotenv from 'dotenv';
-// import GenreModel from './../api/genres/genreModel';
 
 
 /* extracts the user from the token in the request (the payload) and 

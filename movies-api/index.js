@@ -2,11 +2,10 @@ import dotenv from 'dotenv'; //+
 import express from 'express'; //+
 import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
+import usersRouter from './api/users';
 import './db';
 import './seedData';
-import usersRouter from './api/users';
-// import session from 'express-session';
-// import authenticate from './authenticate';
+
 
 // replace existing import with passport strategy​
 import passport from './authenticate';
@@ -35,7 +34,6 @@ app.use('/api/users', usersRouter);
 app.use(errHandler);
 // NEW
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
-app.use('/api/genres', passport.authenticate('jwt', {session: false}), genresRouter);
 
 
 app.listen(port, () => { //+

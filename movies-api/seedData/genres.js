@@ -1,4 +1,4 @@
-const genres= [
+const genres = [
     {
         "id": 28,
         "name": "Action"
