@@ -5,10 +5,8 @@ import genresRouter from './api/genres';
 import usersRouter from './api/users';
 import './db';
 import './seedData';
-
-
-// replace existing import with passport strategy​
 import passport from './authenticate';
+
 
 dotenv.config(); //+
 
@@ -32,7 +30,6 @@ app.use('/api/movies', moviesRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use(errHandler);
-// NEW
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 
 

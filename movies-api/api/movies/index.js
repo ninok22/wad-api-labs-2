@@ -3,20 +3,13 @@ import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid';
 import movieModel from './movieModel'; // NEW
 import asyncHandler from 'express-async-handler'; // NEW
-import { getUpcomingMovies } from '../tmdb-api';
+import { getUpcomingMovies } from '../tmdb-api'; // NEW
 
 const router = express.Router(); 
-
-// router.get('/', asyncHandler(async (req, res) => { // NEW
-//     const movies = await movieModel.find();
-//     res.status(200).json(movies);
-// }));
-
-// Replaced the above function that handles GET '/' request
 /* The Mongoose Model object allows us to limit the number 
    of documents returned from the DB, and also to skip to a 
    particular document in a set of results */
-router.get('/', asyncHandler(async (req, res) => {
+   router.get('/', asyncHandler(async (req, res) => {
     let { page = 1, limit = 10 } = req.query; // destructure page and limit and set default values
     [page, limit] = [+page, +limit]; //trick to convert to numeric (req.query will contain string values)
 
@@ -32,7 +25,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 // Get movie details 
-router.get('/:id', asyncHandler(async (req, res) => { // NEW
+router.get('/:id', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id);
     const movie = await movieModel.findByMovieDBId(id);
     if (movie) {
@@ -56,6 +49,12 @@ router.get('/:id/reviews', (req, res) => {
     }
 });
 
+// Get TMBD - Upcoming
+router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
+    const upcomingMovies = await getUpcomingMovies();
+    res.status(200).json(upcomingMovies);
+  }));
+
 //Post a movie review
 router.post('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
@@ -73,11 +72,5 @@ router.post('/:id/reviews', (req, res) => {
         });
     }
 });
-
-// Get TMBD - Upcoming
-router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
-    const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
-  }));
 
 export default router;
