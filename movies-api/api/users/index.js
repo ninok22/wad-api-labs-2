@@ -57,13 +57,13 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.post('/:userName/favourites', asyncHandler(async (req, res) => {
-  const newFavourite = req.body.id;
+router.post('/:userName/favorites', asyncHandler(async (req, res) => {
+  const newFavorite = req.body.id;
   const userName = req.params.userName;
-  const movie = await movieModel.findByMovieDBId(newFavourite);
+  const movie = await movieModel.findByMovieDBId(newFavorite);
   const user = await User.findByUserName(userName);
-  if(!user.favourites.includes(movie._id)){
-     await user.favourites.push(movie._id);
+  if(!user.favorites.includes(movie._id)){
+     await user.favorites.push(movie._id);
       await user.save(); 
       res.status(201).json(user);  
   }else {
@@ -71,10 +71,10 @@ router.post('/:userName/favourites', asyncHandler(async (req, res) => {
     }
 }));
 
-router.get('/:userName/favourites', asyncHandler( async (req, res) => {
+router.get('/:userName/favorites', asyncHandler( async (req, res) => {
   const userName = req.params.userName;
   const user = await User.findByUserName(userName).populate('favourites');
-  res.status(200).json(user.favourites);
+  res.status(200).json(user.favorites);
 }));
 
 export default router;

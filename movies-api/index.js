@@ -3,6 +3,10 @@ import express from 'express'; //+
 import moviesRouter from './api/movies';
 import genresRouter from './api/genres';
 import usersRouter from './api/users';
+import upcomingRouter from './api/upcoming';
+import topRatedRouter from './api/topRated';
+import movieCreditsRouter from './api/movieCredits';
+import popularRouter from './api/popular';
 import './db';
 import './seedData';
 import passport from './authenticate';
@@ -31,8 +35,10 @@ app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use(errHandler);
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
-app.use('/api/upcoming', usersRouter);
-app.use('/api/topRated', usersRouter);
+app.use('/api/upcoming', upcomingRouter);
+app.use('/api/topRated', topRatedRouter);
+app.use('/api/movieCredits', movieCreditsRouter);
+app.use('/api/popular', popularRouter);
 
 // app.listen(port, () => { //+
 //   console.info(`Server running at ${port}`);

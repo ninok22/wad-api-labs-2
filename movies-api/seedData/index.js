@@ -15,6 +15,13 @@ import upcoming from './upcoming.js';
 import topRatedModel from '../api/topRated/topRatedModel';
 import topRated from './topRated.js';
 
+import movieCreditsModel from '../api/movieCredits/movieCreditsModel';
+import movieCredits from './movieCredits.js';
+import { getMovieCredits } from '../api/tmdb-api';
+
+import popularModel from '../api/popular/popularModel';
+import popular from './popular';
+
 
 dotenv.config();
 
@@ -81,6 +88,31 @@ export async function loadTopRated() {
   }
 }
 
+export async function loadMovieCredits() {
+  console.log('load movie credits data');
+  // console.log(movieCredits.length);
+  try {
+    const movieCredits = await getMovieCredits();
+    await movieCreditsModel.deleteMany();
+    await movieCreditsModel.collection.insertMany(movieCredits);
+    console.info(`${movieCredits.length} Movie credits were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load Movie Credits Data: ${err}`);
+  }
+}
+
+export async function loadPopular() {
+  console.log('load popular data');
+  console.log(popular.length);
+  try {
+    await popularModel.deleteMany();
+    await popularModel.collection.insertMany(popular);
+    console.info(`${popular.length} Popular movies were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load Popular movie Data: ${err}`);
+  }
+}
+
 
 if (process.env.SEED_DB) {
   loadUsers();
@@ -88,5 +120,7 @@ if (process.env.SEED_DB) {
   loadMovies();
   loadUpcoming();
   loadTopRated();
+  loadMovieCredits();
+  loadPopular();
 }
 

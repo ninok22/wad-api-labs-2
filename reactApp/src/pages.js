@@ -42,4 +42,24 @@ export const TopRatedMovies = () => {
         </div>
     </>
 }
+
+export const PopularMovies = () => {
+    const context = useContext(MoviesContext);
+    return <>
+            <h2>Popular Movies Data</h2>
+            <div>
+            {context.popular.results.map(movie => { return <>{movie.id},{movie.title}<br /></> })}
+        </div>
+    </>
+}
+
+// export const MovieCredits = () => {
+//     const context = useContext(MoviesContext);
+//     return <>
+//             <h2>Movies Credits Data</h2>
+//             <div>
+//             {context.movieCredits.results.map(movie => { return <>{movie.id},{movie.title}<br /></> })}
+//         </div>
+//     </>
+// }
  

@@ -45,6 +45,24 @@ export const getMovies = () => {
     ).then(res => res.json());
   };
 
+  export const getMovieCredits = () => {
+    return fetch(
+       'api/movies/tmdb/movieCredits',{headers: {
+         'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    ).then(res => res.json());
+  };
+
+  export const getPopularMovies = () => {
+    return fetch(
+       'api/movies/tmdb/popular',{headers: {
+         'Authorization': window.localStorage.getItem('token')
+      }
+    }
+    ).then(res => res.json());
+  };
+
 /* Notice how the routes match what is implemented in the Express API 
     and what you tested using postman. The proxy property in the React 
     package.json provides the host information required to complete the 

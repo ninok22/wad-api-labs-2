@@ -1,11 +1,12 @@
 import express from 'express';
-import { movies, movieReviews, movieDetails } from './moviesData';
+import { movies, movieReviews, movieDetails, movieCredits} from './moviesData';
 import uniqid from 'uniqid';
 import movieModel from './movieModel'; // NEW
 import asyncHandler from 'express-async-handler'; // NEW
 import { getUpcomingMovies } from '../tmdb-api';
 import { getTopRatedMovies } from '../tmdb-api';
 import { getMovieCredits } from '../tmdb-api';
+import { getPopularMovies } from '../tmdb-api';
 
 
 const router = express.Router(); 
@@ -87,5 +88,24 @@ router.get('/tmdb/credits', asyncHandler( async(req, res) => {
     const movieCredits = await getMovieCredits();
     res.status(200).json(movieCredits);
 })); 
+
+// // Get movie credits
+// router.get('/:id/movieCredits', (req, res) => {
+//     const id = parseInt(req.params.id);
+//     if (movieCredits.id == id) {
+//         res.status(200).json(movieCredits);
+//     } else {
+//         res.status(404).json({
+//             message: 'The resource you requested could not be found.',
+//             status_code: 404
+//         });
+//     }
+// });
+
+// Get TMBD - Popular
+router.get('/tmdb/popular', asyncHandler( async(req, res) => {
+    const popularMovies = await getPopularMovies();
+    res.status(200).json(popularMovies);
+}));
 
 export default router;
