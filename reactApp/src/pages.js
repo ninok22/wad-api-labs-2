@@ -22,4 +22,24 @@ export const Movies = () => {
         </div>
     </>
 }
+
+export const UpcomingMovies = () => {
+    const context = useContext(MoviesContext);
+    return <>
+            <h2>Upcoming Movies Data</h2>
+            <div>
+            {context.upcoming.results.map(movie => { return <>{movie.id},{movie.title}<br /></> })}
+        </div>
+    </>
+}
+
+export const TopRatedMovies = () => {
+    const context = useContext(MoviesContext);
+    return <>
+            <h2>Top Rated Movies Data</h2>
+            <div>
+            {context.topRated.results.map(movie => { return <>{movie.id},{movie.title}<br /></> })}
+        </div>
+    </>
+}
  

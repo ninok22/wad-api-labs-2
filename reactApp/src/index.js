@@ -1,13 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Redirect, Switch, Link } from "react-router-dom";
-import { PublicPage, Movies, Profile, HomePage } from "./pages";
+import { PublicPage, Movies, Profile, HomePage, UpcomingMovies, TopRatedMovies } from "./pages";
 import LoginPage from "./loginPage";
 import AuthProvider from "./authContext";
 import PrivateRoute from "./privateRoute";
 import AuthHeader from "./authHeader";
 import SignUpPage from "./signUpPage";
 import MovieProvider from "./moviesContext";
+
 
 const App = () => {
   return (
@@ -27,9 +28,17 @@ const App = () => {
           <li>
             <Link to="/profile">Profile</Link>
           </li>
+          <li>
+            <Link to="/profile">Upcoming Movies</Link>
+          </li>
+          <li>
+            <Link to="/profile">Top Rated Movies</Link>
+          </li>
         </ul>
         <MovieProvider>
         <Switch>
+          <Route path="/topRated" component={TopRatedMovies} />
+          <Route path="/upcoming" component={UpcomingMovies} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/public" component={PublicPage} />
           <Route exact path="/" component={HomePage} />
