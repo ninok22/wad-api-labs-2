@@ -32,6 +32,7 @@ app.use('/api/users', usersRouter);
 app.use(errHandler);
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/upcoming', usersRouter);
+app.use('/api/topRated', usersRouter);
 
 // app.listen(port, () => { //+
 //   console.info(`Server running at ${port}`);
