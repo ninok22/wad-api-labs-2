@@ -5,10 +5,12 @@ import dotenv from 'dotenv';
 // import the movieModel and movies array exported from movies.js.
 import movieModel from '../api/movies/movieModel';
 import movies from './movies.js';
-
 // import genreModel and genre array from genres.js
 import genreModel from '../api/genres/genreModel';
 import genres from './genres.js';
+
+import upcomingModel from '../api/upcoming/upcomingModel';
+import upcoming from './upcoming.js';
 
 dotenv.config();
 
@@ -50,10 +52,23 @@ export async function loadMovies() {
   }
 }
 
+export async function loadUpcoming() {
+  console.log('load upcoming-seed data');
+  console.log(upcoming.length);
+  try {
+    await upcomingModel.deleteMany();
+    await upcomingModel.collection.insertMany(upcoming);
+    console.info(`${upcoming.length} Upcoming movies were successfully stored.`);
+  } catch (err) {
+    console.error(`failed to Load Upcoming movie Data: ${err}`);
+  }
+}
+
 
 if (process.env.SEED_DB) {
   loadUsers();
   loadGenres();
   loadMovies();
+  loadUpcoming();
 }
 

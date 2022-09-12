@@ -3,7 +3,10 @@ import { movies, movieReviews, movieDetails } from './moviesData';
 import uniqid from 'uniqid';
 import movieModel from './movieModel'; // NEW
 import asyncHandler from 'express-async-handler'; // NEW
-import { getUpcomingMovies } from '../tmdb-api'; // NEW
+import { getUpcomingMovies } from '../tmdb-api';
+import { getTopRatedMovies } from '../tmdb-api';
+import { getMovieCredits } from '../tmdb-api';
+
 
 const router = express.Router(); 
 /* The Mongoose Model object allows us to limit the number 
@@ -49,13 +52,7 @@ router.get('/:id/reviews', (req, res) => {
     }
 });
 
-// Get TMBD - Upcoming
-router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
-    const upcomingMovies = await getUpcomingMovies();
-    res.status(200).json(upcomingMovies);
-  }));
 
-//Post a movie review
 router.post('/:id/reviews', (req, res) => {
     const id = parseInt(req.params.id);
 
@@ -72,5 +69,23 @@ router.post('/:id/reviews', (req, res) => {
         });
     }
 });
+
+// Get TMBD - Upcoming
+router.get('/tmdb/upcoming', asyncHandler( async(req, res) => {
+    const upcomingMovies = await getUpcomingMovies();
+    res.status(200).json(upcomingMovies);
+}));
+
+  // Get TMBD - TopRated
+router.get('/tmdb/topRated', asyncHandler( async(req, res) => {
+    const topRatedMovies = await getTopRatedMovies();
+    res.status(200).json(topRatedMovies);
+}));
+
+// Get TMDB - Movie Credits
+router.get('/tmdb/credits', asyncHandler( async(req, res) => {
+    const movieCredits = await getMovieCredits();
+    res.status(200).json(movieCredits);
+})); 
 
 export default router;
